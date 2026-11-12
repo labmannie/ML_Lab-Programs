@@ -1,12 +1,12 @@
-# Banknote Authentication Using Logistic Regression
+# Machine Learning Laboratory Repository
 
-An Empirical Study on Binary Classification and Decision Threshold Optimization for Counterfeit Detection
+**A Comprehensive Collection of Supervised and Unsupervised Machine Learning Algorithms, Empirical Analyses, and Laboratory Documentation**
 
 ---
 
-## Author Details
+## Author & Institutional Information
 
-* **Name:** Shreyas J
+* **Student Name:** Shreyas J
 * **USN:** 4NI24CI104
 * **Semester & Section:** 5th Semester, Section B (Lab Batch F2)
 * **Institution:** The National Institute of Engineering, Mysuru (An Autonomous Institute under VTU, Belagavi)
@@ -15,104 +15,115 @@ An Empirical Study on Binary Classification and Decision Threshold Optimization 
 
 ---
 
-## Abstract
+## Repository Overview
 
-Automated banknote verification requires reliable pattern recognition algorithms to distinguish genuine currency from counterfeit notes. This project implements a complete binary classification pipeline using Logistic Regression. Features extracted from Continuous Wavelet Transform (CWT) image scans are utilized to train and evaluate the classifier. Performance analysis examines baseline metrics at standard decision boundaries as well as the effects of probability threshold tuning on false-negative minimization.
+This repository serves as a centralized archive for the **Machine Learning Laboratory** coursework. It houses end-to-end Python implementations, Jupyter/Google Colab notebooks, exploratory data analyses, model evaluations, and formal academic laboratory reports covering core paradigms of statistical learning.
 
-*Disclaimer: This project is an academic exercise utilizing a public benchmark dataset and is not certified for commercial banking deployment.*
-
----
-
-## Dataset Description
-
-The dataset is obtained from the UCI Machine Learning Repository (Banknote Authentication Dataset), containing 1,372 instances derived from digitized currency images.
-
-| Feature Name | Data Type | Description |
-| :--- | :--- | :--- |
-| `Variance` | Continuous | Variance of wavelet-transformed image wavelet components |
-| `Skewness` | Continuous | Skewness of wavelet-transformed image wavelet components |
-| `Curtosis` | Continuous | Kurtosis of wavelet-transformed image wavelet components |
-| `Entropy` | Continuous | Entropy metric of the digitized image |
-| `Class` | Binary (0 / 1) | Target label (`0` = Genuine, `1` = Forged) |
-
-* **Total Records:** 1,372 (762 Genuine / 610 Forged)
-* **Missing Values:** None
+Each experiment is organized into its dedicated directory containing executable code, analytical visualizations, and formal documentation.
 
 ---
 
-## Methodology & Pipeline
+## Standard Machine Learning Workflow Architecture
 
-1. **Exploratory Data Analysis (EDA):** Statistical summary, distribution analysis, and correlation evaluation.
-2. **Data Splitting:** Stratified train-test partition using an 80:20 ratio (`random_state=42`) to maintain class proportions.
-3. **Feature Scaling:** Application of `StandardScaler` fitted strictly on training data (`X_train`) to prevent data leakage during evaluation.
-4. **Model Training:** Logistic Regression classifier fitted with `max_iter=1000` utilizing the standard sigmoid probability mapping function.
-5. **Evaluation & Threshold Tuning:** Assessment using Accuracy, Precision, Recall, F1-Score, Confusion Matrices, and probability threshold variation ($\tau \in \{0.30, 0.50, 0.70\}$).
-
----
-
-## Experimental Results
-
-### Test Set Performance ($\tau = 0.50$, $n = 275$)
-
-| Evaluation Metric | Observed Score |
-| :--- | :--- |
-| **Accuracy** | $98.55\%$ |
-| **Precision (Class 1 - Forged)** | $97.30\%$ |
-| **Recall (Class 1 - Forged)** | $99.10\%$ |
-| **F1-Score (Class 1 - Forged)** | $98.19\%$ |
-
-### Threshold Sensitivity Analysis
-
-| Decision Threshold ($\tau$) | Accuracy | Precision | Recall | F1-Score |
-| :---: | :---: | :---: | :---: | :---: |
-| **0.30** | $97.82\%$ | $94.12\%$ | $100.00\%$ | $96.97\%$ |
-| **0.50** | $98.55\%$ | $97.30\%$ | $99.10\%$ | $98.19\%$ |
-| **0.70** | $97.45\%$ | $99.07\%$ | $94.59\%$ | $96.78\%$ |
-
-* **Observation:** Lowering the threshold to $\tau = 0.30$ achieves complete recall ($100.00\%$), eliminating false negatives entirely, which is critical in security domains where accepting counterfeit currency presents the highest risk.
-
----
-
-## Repository Structure
+All experiments in this repository adhere to a standardized, leakage-free machine learning pipeline:
 
 ```text
-banknote-authentication-logreg/
-├── Banknote_Authentication.ipynb   # Complete Jupyter/Colab implementation notebook
-├── Banknote_Report.pdf             # Formal academic laboratory report
-├── requirements.txt                # Python package dependencies
-├── .gitignore                      # Git exclusion rules
-├── LICENSE                         # MIT open-source license
-└── README.md                       # Project documentation
++-----------------------+     +-----------------------+     +-----------------------+
+|   Data Acquisition    | --> | Exploratory Analysis  | --> |  Stratified Split     |
+|  (UCI / Standard DS)  |     |  (EDA & Distributions)|     |   (Train / Test)      |
++-----------------------+     +-----------------------+     +-----------------------+
+                                                                        |
+                                                                        v
++-----------------------+     +-----------------------+     +-----------------------+
+| Threshold & Hyper-    | <-- |   Model Evaluation    | <-- | Feature Preprocessing |
+| parameter Tuning      |     | (Metrics & Matrices)  |     | (Scaling / Encoding)  |
++-----------------------+     +-----------------------+     +-----------------------+
 ```
 
 ---
 
-## Getting Started
+## Index of Laboratory Experiments
 
-### Prerequisites
-Ensure Python 3.8+ and pip are installed on your system.
+| Exp. No. | Experiment Title | Algorithm / Paradigm | Dataset | Directory | Status |
+| :---: | :--- | :--- | :--- | :--- | :---: |
+| **01** | **Banknote Authentication** | Logistic Regression (Binary Classification & Threshold Optimization) | UCI Banknote Authentication ($N = 1,372$) | [`/Exp01_Banknote_Authentication`](./Exp01_Banknote_Authentication) | Completed |
+| **02** | *Experiment 02 (Placeholder)* | *Update Algorithm Name* | *Update Dataset* | [`/Exp02_Directory_Name`](./Exp02_Directory_Name) | Planned |
+| **03** | *Experiment 03 (Placeholder)* | *Update Algorithm Name* | *Update Dataset* | [`/Exp03_Directory_Name`](./Exp03_Directory_Name) | Planned |
+| **04** | *Experiment 04 (Placeholder)* | *Update Algorithm Name* | *Update Dataset* | [`/Exp04_Directory_Name`](./Exp04_Directory_Name) | Planned |
+| **05** | *Experiment 05 (Placeholder)* | *Update Algorithm Name* | *Update Dataset* | [`/Exp05_Directory_Name`](./Exp05_Directory_Name) | Planned |
 
-### Installation & Execution
+*(Note: Update rows 02–05 as additional laboratory experiments are completed and uploaded.)*
 
-1. Clone the repository:
+---
+
+## Repository Directory Structure
+
+```text
+Machine-Learning-Lab/
+│
+├── Exp01_Banknote_Authentication/
+│   ├── Banknote_Authentication.ipynb      # Executable Jupyter/Colab notebook
+│   ├── Banknote_Report.pdf                # Formal laboratory report & viva notes
+│   └── README.md                          # Experiment-specific documentation
+│
+├── Exp02_Directory_Name/                  # Future lab experiment directory
+│   └── ...
+│
+├── requirements.txt                       # Unified Python environment dependencies
+├── .gitignore                             # Git exclusion rules for checkpoints & cache
+├── LICENSE                                # MIT open-source license
+└── README.md                              # Master repository documentation
+```
+
+---
+
+## Technical Stack & Environment Setup
+
+### Core Dependencies
+* **Language:** Python 3.8+
+* **Numerical & Tabular Computation:** `numpy`, `pandas`
+* **Machine Learning & Preprocessing:** `scikit-learn`
+* **Data Visualization:** `matplotlib`, `seaborn`
+* **Interactive Environment:** `jupyter`, Google Colaboratory
+
+### Local Installation & Execution
+
+1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/<your-username>/banknote-authentication-logreg.git
-   cd banknote-authentication-logreg
+   git clone https://github.com/<your-username>/Machine-Learning-Lab.git
+   cd Machine-Learning-Lab
    ```
 
-2. Install dependencies:
+2. **Create and Activate a Virtual Environment (Recommended):**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate        # On Linux/macOS
+   venv\Scripts\activate           # On Windows
+   ```
+
+3. **Install Required Packages:**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Open and run the Jupyter Notebook:
+4. **Launch Jupyter Notebook:**
    ```bash
-   jupyter notebook Banknote_Authentication.ipynb
+   jupyter notebook
    ```
-   *(Alternatively, upload `Banknote_Authentication.ipynb` directly to Google Colab to execute.)*
+   Navigate to any experiment folder (e.g., `Exp01_Banknote_Authentication/`) and open the corresponding `.ipynb` file.
 
 ---
 
-## License
+## Evaluation & Documentation Standards
 
-This project is licensed under the terms of the MIT License. See the `LICENSE` file for details.
+Every laboratory submission in this repository follows strict empirical standards:
+1. **Zero Data Leakage:** Feature scalers, encoders, and imputers are fitted exclusively on training partitions (`X_train`) prior to transforming test sets (`X_test`).
+2. **Reproducibility:** Fixed random seeds (`random_state=42`) are enforced across train-test splits and stochastic estimators.
+3. **Comprehensive Metrics:** Models are evaluated beyond raw accuracy using Precision, Recall, F1-Score, Confusion Matrices, ROC-AUC curves, or Regression Error metrics ($R^2$, MSE, RMSE) as appropriate to the task.
+
+---
+
+## Disclaimer & License
+
+* **Academic Disclaimer:** All implementations and reports in this repository are developed strictly for educational and academic coursework purposes using public benchmark datasets.
+* **License:** Distributed under the **MIT License**. See the [`LICENSE`](./LICENSE) file for complete terms and conditions.
