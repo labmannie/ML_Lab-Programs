@@ -46,13 +46,13 @@
 
 ## 🔬 Executive Summary
 
-This repository houses the official implementations and empirical analyses for the **Machine Learning Laboratory** coursework. Each notebook represents an isolated, end-to-end investigation covering core classical machine learning domains: ordinary least squares regression, $\ell_1$ sparsity regularization, non-linear polynomial basis expansion, logistic classification with decision threshold optimization, and $k$-fold cross-validation pipelines.
+This repository houses the official implementations and empirical analyses for the **Machine Learning Laboratory** coursework. Each notebook represents an isolated, end-to-end investigation covering core classical machine learning domains: ordinary least squares regression, L1 sparsity regularization, non-linear polynomial basis expansion, logistic classification with decision threshold optimization, and k-fold cross-validation pipelines.
 
 ### Core Curricular Pillars
 * **Convex Optimization:** Normal equations, iteratively reweighted least squares, and coordinate descent for penalized objectives.
-* **Leakage-Invariant Preprocessing:** Strict separation of training moments ($\mu, \sigma$) from validation and test partitions.
-* **Resampling Diagnostics:** $k$-fold cross-validation for variance estimation and out-of-sample risk assessment.
-* **Cost-Sensitive Decision Boundaries:** Optimal thresholding ($\tau^*$) on probability outputs beyond default 0.5 cutoffs.
+* **Leakage-Invariant Preprocessing:** Strict separation of training moments (mean μ, standard deviation σ) from validation and test partitions.
+* **Resampling Diagnostics:** K-fold cross-validation for variance estimation and out-of-sample risk assessment.
+* **Cost-Sensitive Decision Boundaries:** Optimal thresholding (tau*) on probability outputs beyond default 0.5 cutoffs.
 
 ---
 
@@ -84,11 +84,11 @@ flowchart LR
 
 | Notebook File | Paradigm / Method | Key Mathematical Concepts | Primary Metrics | Status |
 | :--- | :--- | :--- | :--- | :---: |
-| [`Banknote_LogisticRegression.ipynb`](./Banknote_LogisticRegression.ipynb) | **Logistic Regression** | Sigmoid Activation, Binary Cross-Entropy, Decision Threshold Tuning ($\tau^*$) | Accuracy, Precision, Recall, $F_1$, ROC-AUC | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
-| [`LinearRegression.ipynb`](./LinearRegression.ipynb) | **Ordinary Least Squares** | Normal Equation $\mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^Ty$, Gradient Descent | MSE, RMSE, MAE, $R^2$ Score | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
-| [`OLSLassoReg.ipynb`](./OLSLassoReg.ipynb) | **Lasso Regression ($\ell_1$)** | OLS vs. $\ell_1$-norm regularization, Coordinate Descent, Feature Sparsity | Sparsity Ratio, MSE, Residual Plots | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
-| [`polyregression.ipynb`](./polyregression.ipynb) | **Polynomial Regression** | Polynomial Basis Expansions $\phi(x)$, Bias-Variance Tradeoff, Degree Tuning | Training vs. Testing MSE, Overfitting Analysis | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
-| [`k_fold_lin_reg.ipynb`](./k_fold_lin_reg.ipynb) | **$K$-Fold Cross-Validation** | Resampling Schemes, Out-of-Fold Error Estimation, Variance Diagnostics | Mean CV Score, Standard Deviation ($\sigma$) | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
+| [`Banknote_LogisticRegression.ipynb`](./Banknote_LogisticRegression.ipynb) | **Logistic Regression** | Sigmoid Activation, Binary Cross-Entropy, Decision Threshold Tuning (tau*) | Accuracy, Precision, Recall, F1-Score, ROC-AUC | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
+| [`LinearRegression.ipynb`](./LinearRegression.ipynb) | **Ordinary Least Squares** | Normal Equation w = (XᵀX)⁻¹Xᵀy, Gradient Descent Optimization | MSE, RMSE, MAE, R² Score | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
+| [`OLSLassoReg.ipynb`](./OLSLassoReg.ipynb) | **Lasso Regression (L1)** | OLS vs. L1 Regularization, Coordinate Descent, Feature Sparsity | Sparsity Ratio, MSE, Residual Plots | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
+| [`polyregression.ipynb`](./polyregression.ipynb) | **Polynomial Regression** | Polynomial Basis Expansions φ(x), Bias-Variance Tradeoff, Degree Tuning | Training vs. Testing MSE, Overfitting Analysis | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
+| [`k_fold_lin_reg.ipynb`](./k_fold_lin_reg.ipynb) | **K-Fold Cross-Validation** | Resampling Schemes, Out-of-Fold Error Estimation, Variance Diagnostics | Mean CV Score, Standard Deviation (σ) | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
 | [`endtoendMLProject.ipynb`](./endtoendMLProject.ipynb) | **End-to-End ML Pipeline** | Pipeline Composition, Feature Transforms, Hyperparameter Search, Inference | Comprehensive Metrics Suite | ![Completed](https://img.shields.io/badge/Status-Completed-22c55e?style=flat-square) |
 
 ---
@@ -97,24 +97,58 @@ flowchart LR
 
 ### 1. Banknote Authentication (`Banknote_LogisticRegression.ipynb`)
 Binary classification model predicting banknote validity based on Continuous Wavelet Transform (CWT) features:
-$$\hat{p} = \sigma(\mathbf{w}^T \mathbf{x} + b) = \frac{1}{1 + e^{-(\mathbf{w}^T \mathbf{x} + b)}}$$
-$$\mathcal{L}_{\text{BCE}}(\mathbf{w}, b) = -\frac{1}{N}\sum_{i=1}^N \Big[y_i \ln(\hat{p}_i) + (1 - y_i)\ln(1 - \hat{p}_i)\Big] + \frac{\lambda}{2}\|\mathbf{w}\|_2^2$$
+
+```text
+Hypothesis Function:
+  p̂ = σ(wᵀx + b) = 1 / ( 1 + exp(-(wᵀx + b)) )
+
+Loss Function (Binary Cross-Entropy with L2 Regularization):
+  L(w, b) = - (1/N) ∑ [ yᵢ ln(p̂ᵢ) + (1 - yᵢ) ln(1 - p̂ᵢ) ] + (λ / 2) ||w||₂²
+```
 
 ### 2. Linear Regression & Ordinary Least Squares (`LinearRegression.ipynb`)
-Closed-form parameter estimation minimizing residual sum of squares:
-$$\mathbf{w}^* = \arg\min_{\mathbf{w}} \|\mathbf{y} - \mathbf{X}\mathbf{w}\|_2^2 = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$$
+Closed-form parameter estimation minimizing the residual sum of squares:
+
+```text
+Parameter Optimization:
+  w* = argmin || y - Xw ||₂²
+
+Closed-Form Normal Equation:
+  w* = (Xᵀ X)⁻¹ Xᵀ y
+```
 
 ### 3. Regularized Lasso Modeling (`OLSLassoReg.ipynb`)
-Sparsity-inducing $\ell_1$ penalty driving non-informative feature weights to zero:
-$$\mathcal{L}_{\text{Lasso}}(\mathbf{w}) = \frac{1}{2N}\|\mathbf{y} - \mathbf{X}\mathbf{w}\|_2^2 + \alpha \|\mathbf{w}\|_1 \quad \text{where} \quad \|\mathbf{w}\|_1 = \sum_{j=1}^D |w_j|$$
+Sparsity-inducing L1 penalty driving non-informative feature weights to zero:
+
+```text
+Lasso Objective Function:
+  L_Lasso(w) = (1 / 2N) || y - Xw ||₂² + α ||w||₁
+
+where:
+  ||w||₁ = ∑ |wⱼ|  (L1 norm over all D feature weights)
+```
 
 ### 4. Non-Linear Feature Mapping (`polyregression.ipynb`)
 Higher-degree polynomial transformations modeling non-linear continuous relationships:
-$$\phi(x) = \big[1, \, x, \, x^2, \, \dots, \, x^d\big]^T \implies \hat{y} = \mathbf{w}^T\phi(x)$$
 
-### 5. Resampling via $K$-Fold Validation (`k_fold_lin_reg.ipynb`)
-Partitioning $\mathcal{D}$ into $K$ mutually disjoint folds $\mathcal{D}_1, \dots, \mathcal{D}_K$:
-$$\text{CV}_{(K)} = \frac{1}{K}\sum_{k=1}^K \text{MSE}_k, \quad \text{MSE}_k = \frac{1}{|\mathcal{D}_k|}\sum_{i \in \mathcal{D}_k} \left(y_i - \hat{f}^{(-k)}(\mathbf{x}_i)\right)^2$$
+```text
+Basis Function Transformation:
+  φ(x) = [ 1,  x,  x²,  x³,  ...,  xᵈ ]ᵀ
+
+Predicted Response:
+  ŷ = wᵀ φ(x)
+```
+
+### 5. Resampling via K-Fold Validation (`k_fold_lin_reg.ipynb`)
+Partitioning dataset D into K mutually disjoint validation folds D₁, D₂, ..., Dₖ:
+
+```text
+Cross-Validation Performance Estimator:
+  CV_(K) = (1 / K) ∑ MSEₖ
+
+Individual Fold Error:
+  MSEₖ = (1 / |Dₖ|) ∑ ( yᵢ - f̂⁽⁻ᵏ⁾(xᵢ) )²   for all i ∈ Dₖ
+```
 
 ---
 
